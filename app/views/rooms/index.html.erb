@@ -1,0 +1,16 @@
+<nav class="d-flex justify-content-center align-items-center navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+<%= button_to 'Log Out', logout_path, method: :delete %>
+</nav>
+
+<h1>Rooms</h1>
+
+<div id="rooms">
+  <% @rooms.each do |room| %>
+    <%= render room %>
+    <p>
+      <%= link_to "Show this room", room %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New room", new_room_path %>

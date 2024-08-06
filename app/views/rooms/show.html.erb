@@ -1,0 +1,70 @@
+<style>
+.container {
+}
+.chat {
+  padding:0px;
+  margin-top: 10px;
+}
+
+#messages {
+  background-color:rgb(150, 148, 148);
+  padding:10px;
+  border:5px solid black;
+  border-bottom:none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.send-box {
+  border:5px solid black;
+  border-top : none;
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+  overflow:none;
+}
+
+p {
+  border:1px solid black;
+  width:fit-content;
+  padding: 10px 20px 5px 5px;
+}
+</style>
+<nav class="d-flex justify-content-center align-items-center navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+<span class = "room-title"><%= @room.title %></span>
+<%= button_to 'Log Out', logout_path, method: :delete %>
+</nav>
+    <%= tag.div class: "container chat" do %>
+      <%= tag.div id: "messages", data: { room_id: @room.id } do %>
+        <% @messages.each do |message| %>
+          <% user = User.find(message.user_id) %>
+          <p>
+          <strong><%= user.name %>:</strong> <%= message.content %>
+          </p>
+        <% end %>
+      <% end %>
+      
+    <%=form_with model: Message.new, class: "send-box d-flex" do |f| %>
+      <%= f.text_field :content,style: "flex:1;", placeholder: "message..." %>
+
+      <div style="display:none;">
+        <%= f.label :room_id, style: "display: block" %>
+        <%= f.text_field :room_id, value: @room.id, readonly: "true" %>
+      </div>
+
+      <div style="display:none;">
+        <%= f.label :user_id, style: "display: block" %>
+        <%= f.text_field :user_id, value: current_user.id, readonly: "true" %>
+      </div>
+
+      
+
+      <%= f.submit "send", class: "p-2 font-bold" %>
+      <% end %> 
+  <% end %> 
+
+<div>
+  <%= link_to "Edit this room", edit_room_path(@room) %> |
+  <%= link_to "Back to rooms", rooms_path %>
+
+  <%= button_to "Destroy this room", @room, method: :delete %>
+</div>

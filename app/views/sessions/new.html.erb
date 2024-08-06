@@ -1,0 +1,20 @@
+
+<h1>Login</h1>
+
+<%= form_with(url: login_path,scope: :session,local: true, method: :post) do |form| %>
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Log In' %>
+  </div>
+<% end %>
+
+<%= link_to 'Sign up', new_user_path %> if you don't have an account.
